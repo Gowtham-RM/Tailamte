@@ -1,0 +1,146 @@
+.admin-navbar {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  padding: 15px 0;
+  /* Simplified padding */
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.admin-nav-container {
+  max-width: 1200px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 0 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-sizing: border-box;
+}
+
+.admin-nav-brand a {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+  color: #2c3e50;
+  font-weight: bold;
+  font-size: 1.5rem;
+}
+
+.admin-logo {
+  font-size: 2rem;
+}
+
+.admin-title {
+  color: #667eea;
+}
+
+.admin-nav-menu {
+  display: flex;
+  gap: 30px;
+}
+
+.admin-nav-link {
+  text-decoration: none;
+  color: #2c3e50;
+  font-weight: 500;
+  padding: 10px 15px;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.admin-nav-link:hover {
+  background: rgba(102, 126, 234, 0.1);
+  color: #667eea;
+}
+
+.admin-nav-link.active {
+  background: #667eea;
+  color: white;
+}
+
+.admin-nav-user {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.admin-user-info {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.admin-user-name {
+  font-weight: 600;
+  color: #2c3e50;
+  font-size: 0.9rem;
+}
+
+.admin-user-role {
+  color: #667eea;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.admin-logout-btn {
+  background: #e74c3c;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: background 0.3s ease;
+}
+
+.admin-logout-btn:hover {
+  background: #c0392b;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .admin-nav-container {
+    padding: 0 20px;
+    flex-direction: column;
+    gap: 15px;
+  }
+
+  .admin-nav-menu {
+    gap: 15px;
+  }
+
+  .admin-nav-user {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .admin-user-info {
+    align-items: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .admin-nav-container {
+    padding: 0 15px;
+  }
+
+  .admin-nav-menu {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .admin-nav-link {
+    padding: 8px 12px;
+    font-size: 0.9rem;
+  }
+}
