@@ -17,6 +17,11 @@ const JWT_SECRET = process.env.JWT_SECRET || 'your-secret-key';
 app.use(cors());
 app.use(express.json());
 
+// Health check / base endpoint
+app.get('/', (_req, res) => {
+  res.send('TailMate API running');
+});
+
 // Serve static files from uploads directory
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
