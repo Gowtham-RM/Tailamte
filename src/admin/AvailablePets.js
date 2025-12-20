@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../components/AuthContext';
 import axios from 'axios';
+import API_BASE_URL from '../apiConfig';
 import AdminNavbar from './AdminNavbar';
 import ImageModal from '../components/ImageModal';
 import './ViewPets.css';
@@ -27,7 +28,7 @@ function AvailablePets() {
 	}, [isAuthenticated, isAdmin, navigate]);
 
 	useEffect(() => {
-		axios.get('http://localhost:5000/api/pets')
+		axios.get(`${API_BASE_URL}/api/pets`)
 			.then(res => {
 				setPets(Array.isArray(res.data) ? res.data.filter(pet => pet.status === 'available' || !pet.status) : []);
 			})

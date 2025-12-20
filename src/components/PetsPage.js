@@ -3,6 +3,7 @@ import { useAuth } from './AuthContext';
 import { FavoritesContext } from './FavoritesContext';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import axios from 'axios';
+import API_BASE_URL from '../apiConfig';
 import ImageModal from './ImageModal';
 import './PetsPage.css';
 import './PetCard.css';
@@ -59,7 +60,7 @@ function PetsPage() {
 
   const fetchPets = async () => {
     try {
-      const response = await axios.get('http://localhost:5000/api/pets');
+      const response = await axios.get(`${API_BASE_URL}/api/pets`);
       setPets(response.data);
     } catch (error) {
       setError('Failed to fetch pets');
