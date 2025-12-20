@@ -35,7 +35,7 @@ function Home() {
           Discover your new best friend! <br />
           Adopt a loving pet and give them a forever home.
         </p>
-        <Link to="/pets" className="adopt-pet-btn">Adopt Pet</Link>
+        <Link to="/pets" className="adopt-pet-btn">Adopt/Buy Pet</Link>
       </div>
       {/* Map showing all pet locations */}
       <section style={{ padding: '20px 24px', maxWidth: 1200, margin: '0 auto', width: '100%' }}>
