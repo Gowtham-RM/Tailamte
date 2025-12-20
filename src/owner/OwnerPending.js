@@ -1,6 +1,7 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import API_BASE_URL from '../apiConfig';
 import OwnerNavbar from './OwnerNavbar';
 import { useAuth } from '../components/AuthContext';
 import './OwnerPending.css';
@@ -25,7 +26,7 @@ function OwnerPending() {
         setError('');
         try {
             const token = localStorage.getItem('ownerToken') || localStorage.getItem('token');
-            const response = await axios.get('http://localhost:5000/api/owner/transactions', {
+            const response = await axios.get(`${API_BASE_URL}/api/owner/transactions`, {
                 headers: token ? { Authorization: `Bearer ${token}` } : undefined
             });
             setTransactions(response.data.transactions || []);
@@ -58,7 +59,7 @@ function OwnerPending() {
         try {
             const token = localStorage.getItem('ownerToken') || localStorage.getItem('token');
             await axios.post(
-                `http://localhost:5000/api/transactions/${transaction._id}/confirm`,
+                `${API_BASE_URL}/api/transactions/${transaction._id}/confirm`,
                 { otp: otpValue },
                 {
                     headers: token ? { Authorization: `Bearer ${token}` } : undefined

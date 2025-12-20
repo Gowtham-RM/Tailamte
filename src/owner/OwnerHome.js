@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../components/AuthContext';
 import OwnerNavbar from './OwnerNavbar';
 import axios from 'axios';
+import API_BASE_URL from '../apiConfig';
 import './OwnerHome.css';
 
 function OwnerHome() {
@@ -26,7 +27,7 @@ function OwnerHome() {
   const fetchStats = useCallback(async () => {
     try {
       const token = localStorage.getItem('ownerToken') || localStorage.getItem('token');
-      const response = await axios.get('http://localhost:5000/api/owner/pets', {
+      const response = await axios.get(`${API_BASE_URL}/api/owner/pets`, {
         headers: token ? { Authorization: `Bearer ${token}` } : undefined
       });
       const pets = response.data.pets || [];

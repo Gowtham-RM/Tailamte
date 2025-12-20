@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import axios from 'axios';
+import API_BASE_URL from '../apiConfig';
 import { useNavigate } from 'react-router-dom';
 
 // Ensure default icons work in bundler
@@ -47,7 +48,7 @@ export default function FullMapAllPets() {
     useEffect(() => {
         const fetchPets = async () => {
             try {
-                const res = await axios.get('http://localhost:5000/api/pets');
+                const res = await axios.get(`${API_BASE_URL}/api/pets`);
                 setPets(res.data || []);
             } catch (err) {
                 console.error('Failed to fetch pets', err.message || err);

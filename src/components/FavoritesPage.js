@@ -3,6 +3,7 @@ import { FavoritesContext } from './FavoritesContext'; // ✅ Correct context
 import { useAuth } from './AuthContext';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import API_BASE_URL from '../apiConfig';
 import './FavoritesPage.css'; // ✅ Using dedicated FavoritesPage styles
 
 const FavoritesPage = () => {
@@ -25,7 +26,7 @@ const FavoritesPage = () => {
       return;
     }
     try {
-      await axios.post(`http://localhost:5000/api/pets/${petId}/adopt`);
+      await axios.post(`${API_BASE_URL}/api/pets/${petId}/adopt`);
       // Remove from favorites after successful adoption
       removeFromFavorites(petId);
       alert(`${petName} adopted successfully!`);

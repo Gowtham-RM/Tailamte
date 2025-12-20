@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import axios from 'axios';
+import API_BASE_URL from '../apiConfig';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../components/AuthContext';
 import OwnerNavbar from './OwnerNavbar';
@@ -21,7 +22,7 @@ export default function OwnerConversations() {
         let cancelled = false;
         const load = async () => {
             try {
-                const res = await axios.get('http://localhost:5000/api/owner/conversations');
+                const res = await axios.get(`${API_BASE_URL}/api/owner/conversations`);
                 if (!cancelled && res.data?.success) setItems(res.data.conversations);
             } catch (e) {
                 if (!cancelled) setError(e.response?.data?.message || 'Failed to load');

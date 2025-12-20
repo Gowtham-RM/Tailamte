@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
+import API_BASE_URL from '../apiConfig';
 import { useAuth } from './AuthContext';
 import './AdoptBuyPage.css';
 
@@ -38,7 +39,7 @@ export default function AdoptBuyPage() {
     }
     const fetchPet = async () => {
       try {
-        const res = await axios.get(`http://localhost:5000/api/pets/${id}`);
+        const res = await axios.get(`${API_BASE_URL}/api/pets/${id}`);
         setPet(res.data);
         setMode(res.data?.listingType === 'sale' ? 'purchase' : 'adoption');
       } catch (err) {
@@ -89,7 +90,7 @@ export default function AdoptBuyPage() {
         }
       }
 
-      await axios.post(`http://localhost:5000/api/pets/${id}/request`, {
+      await axios.post(`${API_BASE_URL}/api/pets/${id}/request`, {
         type: mode,
         name: name.trim(),
         email: email.trim(),

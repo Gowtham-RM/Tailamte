@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../components/AuthContext';
 import axios from 'axios';
+import API_BASE_URL from '../apiConfig';
 import AdminNavbar from './AdminNavbar';
 import './AddPet.css';
 
@@ -127,7 +128,7 @@ function AddPet() {
         imageFile: imageFile ? imageFile.name : 'No file'
       });
 
-      await axios.post('http://localhost:5000/api/pets', formDataToSend, {
+      await axios.post(`${API_BASE_URL}/api/pets`, formDataToSend, {
         headers: {
           'Authorization': `Bearer ${token}`
           // Don't set Content-Type, let axios set it automatically for FormData

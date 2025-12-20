@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import API_BASE_URL from '../apiConfig';
 import { useAuth } from '../components/AuthContext';
 import OwnerNavbar from './OwnerNavbar';
 import './AddPet.css';
@@ -76,7 +77,7 @@ function OwnerAddPet() {
         }
       }
 
-      await axios.post('http://localhost:5000/api/owner/pets', fd, {
+      await axios.post(`${API_BASE_URL}/api/owner/pets`, fd, {
         headers: { Authorization: `Bearer ${token}` }
       });
       window.alert('Pet listed successfully');

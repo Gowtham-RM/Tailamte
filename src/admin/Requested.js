@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import API_BASE_URL from '../apiConfig';
 import AdminNavbar from './AdminNavbar';
 import './Requested.css';
 
@@ -15,7 +16,7 @@ function Requested() {
     setLoading(true);
     setError('');
     try {
-      const res = await axios.get('http://localhost:5000/api/pet-requests');
+      const res = await axios.get(`${API_BASE_URL}/api/pet-requests`);
       setRequests(res.data.requests);
     } catch (err) {
       setError('Failed to fetch requests');
@@ -27,7 +28,7 @@ function Requested() {
   // fetchRequestsBg: background refresh, no spinner
   const fetchRequestsBg = async () => {
     try {
-      const res = await axios.get('http://localhost:5000/api/pet-requests');
+      const res = await axios.get(`${API_BASE_URL}/api/pet-requests`);
       setRequests(res.data.requests);
     } catch (err) {
       // Do not update error/loading for background
@@ -48,7 +49,7 @@ function Requested() {
   const handleAction = async (id, status) => {
     setActionLoading(id);
     try {
-      await axios.put(`http://localhost:5000/api/pet-requests/${id}`, { status });
+      await axios.put(`${API_BASE_URL}/api/pet-requests/${id}`, { status });
       const actionText = status === 'approved' ? 'approved' : 'rejected';
       showToast(`Request ${actionText} successfully`, 'success');
       fetchRequests();

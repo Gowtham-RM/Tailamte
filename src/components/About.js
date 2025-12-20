@@ -1,5 +1,6 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import axios from 'axios';
+import API_BASE_URL from '../apiConfig';
 import { Link, useNavigate } from 'react-router-dom';
 import './About.css';
 
@@ -26,7 +27,7 @@ function About() {
     const fetchStats = async () => {
       try {
         setStatsLoading(true);
-        const { data } = await axios.get('http://localhost:5000/api/stats');
+        const { data } = await axios.get(`${API_BASE_URL}/api/stats`);
         if (!isMounted) return;
         if (data.success) {
           setStats(data.stats);
@@ -41,7 +42,7 @@ function About() {
     const fetchTopOwners = async () => {
       try {
         setOwnersLoading(true);
-        const { data } = await axios.get('http://localhost:5000/api/owners/top-rated?limit=5');
+        const { data } = await axios.get(`${API_BASE_URL}/api/owners/top-rated?limit=5`);
         if (!isMounted) return;
         const owners = Array.isArray(data?.owners) ? data.owners : [];
         setTopOwners(

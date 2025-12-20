@@ -1,5 +1,6 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import axios from 'axios';
+import API_BASE_URL from '../apiConfig';
 
 const AuthContext = createContext();
 
@@ -70,7 +71,7 @@ export const AuthProvider = ({ children }) => {
     const checkAuth = async () => {
       if (token) {
         try {
-          const response = await axios.get('http://localhost:5000/api/user/profile');
+          const response = await axios.get(`${API_BASE_URL}/api/user/profile`);
           setUser(response.data.user);
         } catch (error) {
           console.error('Auth check failed:', error);
@@ -90,7 +91,7 @@ export const AuthProvider = ({ children }) => {
       const endpoint = isAdmin ? '/api/admin-login' : '/api/user-login';
       const data = isAdmin ? { adminId: email, password } : { email, password };
       
-      const response = await axios.post(`http://localhost:5000${endpoint}`, data);
+      const response = await axios.post(`${API_BASE_URL}${endpoint}`, data);
       
       const { token: newToken, user: userData } = response.data;
       

@@ -23,7 +23,7 @@ function Users() {
   // Note: This fetches user data from your backend API, which is connected to MongoDB at mongodb://localhost:27017/petad
   const fetchUsers = async () => {
     try {
-      const res = await fetch('http://localhost:5000/api/users');
+      const res = await fetch(`${require('../apiConfig').default}/api/users`);
       const data = await res.json();
       if (data.success) {
         setUsers(data.users);

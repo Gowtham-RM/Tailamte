@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import API_BASE_URL from '../apiConfig';
 import { useAuth } from './AuthContext';
 import './ChatPage.css';
 
@@ -27,7 +28,7 @@ export default function ChatPage() {
         }
         const fetchPet = async () => {
             try {
-                const res = await axios.get(`http://localhost:5000/api/pets/${id}`);
+                const res = await axios.get(`${API_BASE_URL}/api/pets/${id}`);
                 setPet(res.data);
             } catch (e) {
                 setError('Failed to load pet');
@@ -38,10 +39,10 @@ export default function ChatPage() {
 
     const loadMessages = async () => {
         try {
-            const res = await axios.get(`http://localhost:5000/api/pets/${id}/messages`);
+            const res = await axios.get(`${API_BASE_URL}/api/pets/${id}/messages`);
             if (res.data?.success) setMessages(res.data.messages);
             // Mark any owner->user unread messages as read
-            try { await axios.post(`http://localhost:5000/api/pets/${id}/messages/mark-read`); } catch (_) { }
+            try { await axios.post(`${API_BASE_URL}/api/pets/${id}/messages/mark-read`); } catch (_) { }
         } catch (e) {
             // ignore transient errors
         } finally {
@@ -75,7 +76,7 @@ export default function ChatPage() {
         }
         try {
             setSending(true);
-            const res = await axios.post(`http://localhost:5000/api/pets/${id}/messages`, { text: msg });
+            const res = await axios.post(`${API_BASE_URL}/api/pets/${id}/messages`, { text: msg });
             if (!res.data?.success) throw new Error(res.data?.message || 'Failed');
             setText('');
             await loadMessages();
@@ -91,7 +92,7 @@ export default function ChatPage() {
     const onCloseChat = async () => {
         if (!window.confirm('Close this chat? This will clear the messages.')) return;
         try {
-            await axios.delete(`http://localhost:5000/api/pets/${id}/messages`);
+            await axios.delete(`${API_BASE_URL}/api/pets/${id}/messages`);
         } catch (_) { /* ignore */ }
         clearInterval(pollRef.current);
         setMessages([]);

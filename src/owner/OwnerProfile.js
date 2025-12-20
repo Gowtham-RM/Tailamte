@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import API_BASE_URL from '../apiConfig';
 import { useAuth } from '../components/AuthContext';
 import { useNavigate } from 'react-router-dom';
 import OwnerNavbar from './OwnerNavbar';
@@ -19,7 +20,7 @@ function OwnerProfile() {
     }
     const load = async () => {
       try {
-        const res = await axios.get('http://localhost:5000/api/user/profile');
+        const res = await axios.get(`${API_BASE_URL}/api/user/profile`);
         setProfile(res.data.user);
       } catch (e) {
         setError('Failed to load profile');

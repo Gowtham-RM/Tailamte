@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
+import API_BASE_URL from '../apiConfig';
 import { useAuth } from '../components/AuthContext';
 import OwnerNavbar from './OwnerNavbar';
 import './EditPet.css';
@@ -38,7 +39,7 @@ function OwnerEditPet() {
           console.log('[OwnerEditPet] JWT role:', payload.role, 'userId:', payload.userId);
         } catch { /* ignore */ }
 
-        const res = await axios.get(`http://localhost:5000/api/owner/pets/${id}`, {
+        const res = await axios.get(`${API_BASE_URL}/api/owner/pets/${id}`, {
           headers: { Authorization: `Bearer ${token}` }
         });
         const p = res.data?.pet;
