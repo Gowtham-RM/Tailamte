@@ -49,9 +49,15 @@ const upload = multer({
   }
 });
 
-// Use database name 'petad'
-mongoose.connect('mongodb://localhost:27017/petad')
-  .then(() => console.log('Connected to MongoDB'))
+// Use MongoDB Atlas connection (falls back to env override)
+const MONGODB_URI = process.env.MONGODB_URI || 'mongodb+srv://ravigowtham500_db_user:ravigowtham123456@cluster0.ppfmzk5.mongodb.net/?appName=Cluster0';
+
+mongoose.connect(MONGODB_URI, {
+  dbName: process.env.MONGODB_DB || 'petad',
+  useNewUrlParser: true,
+  useUnifiedTopology: true
+})
+  .then(() => console.log('Connected to MongoDB Atlas'))
   .catch(err => console.error('MongoDB connection error:', err));
 
 // === Schemas ===
