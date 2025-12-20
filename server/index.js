@@ -58,9 +58,7 @@ const upload = multer({
 const MONGODB_URI = process.env.MONGODB_URI || 'mongodb+srv://ravigowtham500_db_user:ravigowtham123456@cluster0.ppfmzk5.mongodb.net/?appName=Cluster0';
 
 mongoose.connect(MONGODB_URI, {
-  dbName: process.env.MONGODB_DB || 'petad',
-  useNewUrlParser: true,
-  useUnifiedTopology: true
+  dbName: process.env.MONGODB_DB || 'petad'
 })
   .then(() => console.log('Connected to MongoDB Atlas'))
   .catch(err => console.error('MongoDB connection error:', err));
