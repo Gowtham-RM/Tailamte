@@ -123,13 +123,15 @@
     }
 }
 
+/* Remove overflow:hidden to prevent child elements from being clipped */
 .pet-card {
     background: white;
     border-radius: 15px;
-    overflow: hidden;
+    /* overflow: hidden; */
     box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
     transition: all 0.3s ease;
     position: relative;
+    z-index: 1;
 }
 
 .pet-card:hover {
@@ -138,11 +140,16 @@
 }
 
 /* Pet Image */
+/* Remove overflow:hidden to prevent card-actions from being clipped */
+/* Fix: Set max-height and margin for .pet-image so it doesn't cover the whole card */
 .pet-image {
     position: relative;
     width: 100%;
+    max-height: 220px;
     height: 200px;
-    overflow: hidden;
+    margin-bottom: 0;
+    /* overflow: hidden; */
+    z-index: 1;
 }
 
 .pet-image img {
@@ -264,6 +271,8 @@
     background: #f8f9fa;
     border-top: 1px solid #e9ecef;
     flex-wrap: wrap;
+    z-index: 2;
+    position: relative;
 }
 
 .card-actions button {
