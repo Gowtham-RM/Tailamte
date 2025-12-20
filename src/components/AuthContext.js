@@ -111,7 +111,7 @@ export const AuthProvider = ({ children }) => {
   };
   const loginOwner = async (idOrEmail, password) => {
     try {
-      const response = await axios.post('http://localhost:5000/api/owner-login', {
+      const response = await axios.post(`${API_BASE_URL}/api/owner-login`, {
         ownerId: idOrEmail,
         password
       });
@@ -132,7 +132,7 @@ export const AuthProvider = ({ children }) => {
 
   const signup = async (userData) => {
     try {
-      const response = await axios.post('http://localhost:5000/api/signup', userData);
+      const response = await axios.post(`${API_BASE_URL}/api/signup`, userData);
       
       const { token: newToken, user: newUser } = response.data;
       

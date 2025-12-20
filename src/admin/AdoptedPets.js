@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../components/AuthContext';
 import axios from 'axios';
+import API_BASE_URL from '../apiConfig';
 import AdminNavbar from './AdminNavbar';
 import ImageModal from '../components/ImageModal';
 import './ViewPets.css';
@@ -27,7 +28,7 @@ function AdoptedPets() {
 
 	const fetchPets = async () => {
 		try {
-			const response = await axios.get('http://localhost:5000/api/pets');
+			const response = await axios.get(`${API_BASE_URL}/api/pets`);
 			// Include both adopted and sold for this consolidated view
 			setPets(response.data.filter(pet => pet.status === 'adopted' || pet.status === 'sold'));
 		} catch (error) {

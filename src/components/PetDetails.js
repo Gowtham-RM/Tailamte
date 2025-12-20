@@ -18,7 +18,8 @@ function PetDetails() {
   useEffect(() => {
     const fetchPet = async () => {
       try {
-        const res = await axios.get(`http://localhost:5000/api/pets/${id}`);
+        const API_BASE_URL = require('../apiConfig').default;
+        const res = await axios.get(`${API_BASE_URL}/api/pets/${id}`);
         setPet(res.data);
       } catch (err) {
         console.error('Failed to load pet', err);

@@ -101,7 +101,7 @@ export default function AdoptBuyPage() {
         paymentStatus: payStatus,
         paymentRef: payRef
       });
-      const initiateRes = await axios.post(`http://localhost:5000/api/pets/${id}/initiate`, { type: mode });
+      const initiateRes = await axios.post(`${API_BASE_URL}/api/pets/${id}/initiate`, { type: mode });
       const transactionId = initiateRes?.data?.transactionId;
       const purchaseNotice = mode === 'purchase'
         ? (payStatus === 'succeeded'

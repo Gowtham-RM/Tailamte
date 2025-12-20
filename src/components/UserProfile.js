@@ -5,6 +5,7 @@ import axios from 'axios';
 import './UserProfile.css';
 
 function UserProfile() {
+    const API_BASE_URL = require('../apiConfig').default;
   // Include isOwner so we don't treat owners as regular adopters
   const { isAuthenticated, isAdmin, isOwner } = useAuth();
   const [userProfile, setUserProfile] = useState(null);
@@ -43,8 +44,8 @@ function UserProfile() {
           setLoading(true);
         }
         const [profileRes, transactionsRes] = await Promise.all([
-          axios.get('http://localhost:5000/api/user/profile'),
-          axios.get('http://localhost:5000/api/user/transactions')
+          axios.get(`${API_BASE_URL}/api/user/profile`),
+          axios.get(`${API_BASE_URL}/api/user/transactions`)
         ]);
         if (isCancelled) return;
         setUserProfile(profileRes.data.user);
@@ -83,7 +84,7 @@ function UserProfile() {
 
   const refreshTransactions = async () => {
     try {
-      const response = await axios.get('http://localhost:5000/api/user/transactions');
+      const response = await axios.get(`${API_BASE_URL}/api/user/transactions`);
       setTransactions(response?.data?.transactions || []);
     } catch (err) {
       console.error('Failed to refresh transactions', err);
@@ -116,7 +117,8 @@ function UserProfile() {
     setRatingSubmitting(true);
     setToast(null);
     try {
-      await axios.post(`http://localhost:5000/api/transactions/${ratingModal.transactionId}/rate`, {
+      const API_BASE_URL = require('../apiConfig').default;
+      await axios.post(`${API_BASE_URL}/api/transactions/${ratingModal.transactionId}/rate`, {
         rating: ratingModal.rating
       });
       setToast({ type: 'success', message: 'Thanks for rating! The owner can now confirm the handover.' });

@@ -136,7 +136,7 @@ function OwnerEditPet() {
           return;
         }
       }
-      await axios.put(`http://localhost:5000/api/owner/pets/${id}`, body, { headers });
+      await axios.put(`${API_BASE_URL}/api/owner/pets/${id}`, body, { headers });
       window.alert('Updated');
       navigate('/owner/my-pets');
     } catch (err) {
