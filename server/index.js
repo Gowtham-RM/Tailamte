@@ -25,6 +25,9 @@ app.get('/', (_req, res) => {
 // Serve static files from uploads directory
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
+// Use BASE_URL from environment or default to localhost
+const BASE_URL = process.env.BASE_URL || `http://localhost:${PORT}`;
+
 // Configure multer for file uploads
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
@@ -225,7 +228,7 @@ app.post('/api/pet-requests', authenticateToken, upload.single('image'), async (
     return res.status(400).json({ success: false, message: 'Invalid latitude or longitude range' });
   }
   try {
-    const imageUrl = `http://localhost:5000/uploads/${req.file.filename}`;
+    const imageUrl = `${BASE_URL}/uploads/${req.file.filename}`;
     const petRequest = new PetRequest({
       name,
       type,
@@ -508,7 +511,7 @@ app.post('/api/pets', authenticateToken, upload.single('image'), async (req, res
     return res.status(400).json({ success: false, message: 'Image file is required' });
   }
   try {
-    const imageUrl = `http://localhost:5000/uploads/${req.file.filename}`;
+    const imageUrl = `${BASE_URL}/uploads/${req.file.filename}`;
     const pet = new Pet({
       name,
       type,
@@ -564,7 +567,7 @@ app.put('/api/pets/:id', authenticateToken, upload.single('image'), async (req, 
 
     // If a new image file is uploaded, update the image URL
     if (req.file) {
-      updateData.image = `http://localhost:5000/uploads/${req.file.filename}`;
+      updateData.image = `${BASE_URL}/uploads/${req.file.filename}`;
     }
 
     // If status is changed to available, clear the adoptedBy and adoptedAt fields
@@ -1092,7 +1095,7 @@ app.post('/api/owner/pets', authenticateToken, upload.single('image'), async (re
     return res.status(400).json({ success: false, message: 'Image file is required' });
   }
   try {
-    const imageUrl = `http://localhost:5000/uploads/${req.file.filename}`;
+    const imageUrl = `${BASE_URL}/uploads/${req.file.filename}`;
     const pet = new Pet({
       name, type, breed, age: parseInt(age), gender, description, image: imageUrl,
       location: (lat && lng) ? { lat: Number(lat), lng: Number(lng) } : undefined,
@@ -1136,7 +1139,7 @@ app.put('/api/owner/pets/:id', authenticateToken, upload.single('image'), async 
     }
 
     if (req.file) {
-      pet.image = `http://localhost:5000/uploads/${req.file.filename}`;
+      pet.image = `${BASE_URL}/uploads/${req.file.filename}`;
     }
     if (pet.status === 'available') {
       pet.adoptedBy = null;
