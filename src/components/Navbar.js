@@ -9,9 +9,27 @@ function Navbar({ onLoginClick }) {
   const { favoriteItems } = useContext(FavoritesContext);
   const { user, isAuthenticated, isAdmin, isOwner, logout } = useAuth();
   const [showUserMenu, setShowUserMenu] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
   const dropdownRef = useRef(null);
+
+  // Close mobile menu on route change
+  useEffect(() => {
+    setIsMobileMenuOpen(false);
+  }, [location.pathname]);
+
+  // Prevent body scroll when mobile menu is open
+  useEffect(() => {
+    if (isMobileMenuOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [isMobileMenuOpen]);
 
   // Close dropdown when clicking outside
   useEffect(() => {
@@ -75,14 +93,38 @@ function Navbar({ onLoginClick }) {
   return (
     <nav className="navbar">
       <div className="logo">
-        <img src={paw} alt="TailMate Logo" />
-        <span>TailMate</span>
+        <Link to="/">
+          <img src={paw} alt="TailMate Logo" />
+          <span>TailMate</span>
+        </Link>
       </div>
-      <ul className="nav-links">
+
+      {/* Hamburger Menu Button - Mobile Only */}
+      <button
+        className={`hamburger-btn ${isMobileMenuOpen ? 'open' : ''}`}
+        onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+        aria-label="Toggle menu"
+        aria-expanded={isMobileMenuOpen}
+      >
+        <span className="hamburger-line"></span>
+        <span className="hamburger-line"></span>
+        <span className="hamburger-line"></span>
+      </button>
+
+      {/* Mobile Overlay Backdrop */}
+      {isMobileMenuOpen && (
+        <div
+          className="mobile-overlay"
+          onClick={() => setIsMobileMenuOpen(false)}
+        ></div>
+      )}
+
+      {/* Navigation Links */}
+      <ul className={`nav-links ${isMobileMenuOpen ? 'mobile-open' : ''}`}>
         <li><Link to="/" className={isActiveLink('/') ? 'active' : ''}>Home</Link></li>
         <li><Link to="/pets" className={isActiveLink('/pets') ? 'active' : ''}>Pets</Link></li>
         {/* Show favorites and Add Pets Request link for regular users only (not admin) */}
-  {isAuthenticated && !isAdmin && !isOwner && (
+        {isAuthenticated && !isAdmin && !isOwner && (
           <>
             <li>
               <Link to="/favorites" className={isActiveLink('/favorites') ? 'active' : ''}>
@@ -97,11 +139,11 @@ function Navbar({ onLoginClick }) {
           </>
         )}
         <li><Link to="/about" className={isActiveLink('/about') ? 'active' : ''}>About Us</Link></li>
-        
+
         {showUserProfileMenu ? (
           <li className="user-menu" ref={dropdownRef}>
-            <div 
-              className="user-avatar" 
+            <div
+              className="user-avatar"
               onClick={() => setShowUserMenu(!showUserMenu)}
             >
               <span>{user?.name?.charAt(0).toUpperCase()}</span>
@@ -139,12 +181,14 @@ function Navbar({ onLoginClick }) {
         ) : (
           <>
             {/* On non-dashboard pages, always show user-facing Login/Signup, even if admin/owner is authenticated */}
-            <li>
+            <li className="auth-buttons">
               <button onClick={handleLoginClick} className="nav-btn">
                 Login
               </button>
             </li>
-            <li><Link to="/signup" className="nav-btn-signup">Signup</Link></li>
+            <li className="auth-buttons">
+              <Link to="/signup" className="nav-btn-signup">Signup</Link>
+            </li>
           </>
         )}
       </ul>

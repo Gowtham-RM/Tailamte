@@ -56,24 +56,54 @@
   .page-container {
     margin: var(--space-md);
     padding: var(--space-md);
+    border-radius: var(--radius-lg);
   }
 
   .main-content {
-    padding-top: 80px;
-    /* Slightly less padding on mobile */
+    padding-top: 70px;
   }
 }
 
 @media (max-width: 480px) {
   .main-content {
-    padding-top: 75px;
-    /* Even less padding on small mobile */
+    padding-top: 65px;
   }
 
   .page-container {
-    margin: 10px;
-    padding: 15px;
+    margin: 8px;
+    padding: 12px;
+    border-radius: var(--radius-md);
   }
+}
+
+/* ===== SAFE AREA INSETS (for notched devices) ===== */
+@supports (padding: max(0px)) {
+  .main-content {
+    padding-left: max(0px, env(safe-area-inset-left));
+    padding-right: max(0px, env(safe-area-inset-right));
+    padding-bottom: max(0px, env(safe-area-inset-bottom));
+  }
+
+  .page-container {
+    margin-left: max(var(--space-md), env(safe-area-inset-left));
+    margin-right: max(var(--space-md), env(safe-area-inset-right));
+  }
+}
+
+/* ===== TOUCH TARGET UTILITY ===== */
+.touch-target {
+  min-width: 44px;
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ===== PREVENT HORIZONTAL OVERFLOW ===== */
+html,
+body {
+  overflow-x: hidden;
+  max-width: 100vw;
 }
 
 /* ===== ANIMATION UTILITIES ===== */

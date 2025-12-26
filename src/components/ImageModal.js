@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import './ImageModal.css';
 
 function ImageModal({ isOpen, imageUrl, altText, onClose }) {
@@ -8,11 +8,11 @@ function ImageModal({ isOpen, imageUrl, altText, onClose }) {
     }
   };
 
-  const handleKeyPress = (e) => {
+  const handleKeyPress = useCallback((e) => {
     if (e.key === 'Escape') {
       onClose();
     }
-  };
+  }, [onClose]);
 
   React.useEffect(() => {
     if (isOpen) {
@@ -24,7 +24,7 @@ function ImageModal({ isOpen, imageUrl, altText, onClose }) {
       document.removeEventListener('keydown', handleKeyPress);
       document.body.style.overflow = 'unset';
     };
-  }, [isOpen]);
+  }, [isOpen, handleKeyPress]);
 
   if (!isOpen) return null;
 
@@ -34,9 +34,9 @@ function ImageModal({ isOpen, imageUrl, altText, onClose }) {
         <button className="image-modal-close" onClick={onClose}>
           ✕
         </button>
-        <img 
-          src={imageUrl} 
-          alt={altText} 
+        <img
+          src={imageUrl}
+          alt={altText}
           className="image-modal-img"
           onClick={(e) => e.stopPropagation()}
         />

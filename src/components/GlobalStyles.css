@@ -288,6 +288,29 @@ a:hover {
     font-size: var(--font-size-lg);
 }
 
+/* Button focus states for accessibility */
+.btn:focus-visible {
+    outline: 3px solid var(--brand-primary);
+    outline-offset: 2px;
+}
+
+.btn-primary:focus-visible {
+    outline-color: var(--brand-secondary);
+}
+
+/* Mobile button sizing - ensure touch targets */
+@media (max-width: 768px) {
+    .btn {
+        min-height: 44px;
+        padding: 12px 20px;
+    }
+
+    .btn-sm {
+        min-height: 40px;
+        padding: 10px 16px;
+    }
+}
+
 /* ========================================
    CARD STYLES
 ======================================== */

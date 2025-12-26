@@ -25,7 +25,20 @@ function PetsPage() {
   const [showLoginPopup, setShowLoginPopup] = useState(false);
   const [modalImage, setModalImage] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isFilterOpen, setIsFilterOpen] = useState(false);
   // No modal state for separate page flow
+
+  // Prevent body scroll when filter drawer is open
+  useEffect(() => {
+    if (isFilterOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [isFilterOpen]);
 
   // Check if user is a regular user (not admin)
   const isRegularUser = isAuthenticated && !isAdmin;
@@ -144,8 +157,35 @@ function PetsPage() {
   return (
     <div className="main-content">
       <div className="pets-container fade-in">
-        <div className="filter-sidebar">
-          <h2>Filter Pets</h2>
+        {/* Mobile Filter Toggle Button */}
+        <button
+          className="filter-toggle-btn"
+          onClick={() => setIsFilterOpen(!isFilterOpen)}
+          aria-label="Toggle filters"
+        >
+          <span className="filter-icon">🔍</span>
+          <span className="filter-text">Filters</span>
+        </button>
+
+        {/* Filter Overlay for Mobile */}
+        {isFilterOpen && (
+          <div
+            className="filter-overlay"
+            onClick={() => setIsFilterOpen(false)}
+          ></div>
+        )}
+
+        <div className={`filter-sidebar ${isFilterOpen ? 'mobile-open' : ''}`}>
+          <div className="filter-header">
+            <h2>Filter Pets</h2>
+            <button
+              className="filter-close-btn"
+              onClick={() => setIsFilterOpen(false)}
+              aria-label="Close filters"
+            >
+              ✕
+            </button>
+          </div>
           <label>
             Type:
             <select
